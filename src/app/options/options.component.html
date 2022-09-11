@@ -1,0 +1,50 @@
+<!--<div class="container w-50 m-auto">-->
+<!--<div class="row">-->
+<!--<div *ngFor="let passenger of state.booking.passengers" class="card m-1" style="width: 15rem">-->
+<!--<h5 class="card-title m-1">{{ passenger.name }}</h5>-->
+<!--<div class="card-body">{{ passenger.birthDate | date:"mediumDate"}} <img *ngIf="!passenger.notInfant "-->
+<!--src="../../assets/baby-boy.png"-->
+<!--width="20" height="20"></div>-->
+<!--<button class="btn btn-primary m-1">выбрать питание</button>-->
+<!--<button class="btn btn-primary m-1 ">программа лояльности</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<ul class="list-group w-75 m-auto">
+
+  <li class="list-group-item active" [class]="state.state === 'SELECT_LOYALTY_PASSENGER' ? 'active': 'bg-secondary text-light'"><b>Выберите программу лояльности</b></li>
+  <li class="list-group-item" *ngFor="let passenger of state.booking.passengers; index as i">{{passenger.name}}<img
+    *ngIf="!passenger.notInfant " src="../../assets/baby-boy.png"
+    width="20" height="20">
+    <div class="input-group">
+      <div ngbDropdown class="input-group-prepend">
+        <!--TODO set focus to input-->
+        <button class="btn form-control" ngbDropdownToggle [id]="i" [class]="loyalties[i].disabled || state.state !== 'SELECT_LOYALTY_PASSENGER' ? 'btn-dis btn-outline-secondary':'btn-outline-primary'" [disabled]="loyalties[i].disabled">
+          <span *ngIf="!loyalties[i].code">выбрать</span>
+          <span *ngIf="loyalties[i].code">{{ loyalties[i].code }}</span>
+        </button>
+        <div ngbDropdownMenu [aria-labelledby]="i">
+          <ng-container *ngIf="partners; else loadingPartners">
+            <button ngbDropdownItem *ngFor="let partner of partners" (click)="chooseLoyalty(partner.code, i)">
+              {{partner.title}}
+            </button>
+          </ng-container>
+          <ng-template #loadingPartners>
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <input placeholder="номер" *ngIf="loyalties[i].code" [class]="loyalties[i].disabled? 'dis ':''" [disabled]="loyalties[i].disabled" [(ngModel)]="loyalties[i].number" class="form-control"/>
+      <div class="input-group-append">
+        <button class="btn btn-primary form-control" [class]="loyalties[i].disabled? 'btn-dis btn-secondary':''" [disabled]="loyalties[i].disabled" *ngIf="loyalties[i].code" (click)="setLoyalty(i)">ок</button>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <button class="btn" [class]="state.state === 'SELECT_LOYALTY_PASSENGER' ? 'btn-primary': 'btn-secondary disabled btn-dis'" [disabled]="state.state !== 'SELECT_LOYALTY_PASSENGER'" (click)="choose()">продолжить</button>
+  </li>
+
+</ul>
+

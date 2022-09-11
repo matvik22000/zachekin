@@ -1,0 +1,23 @@
+<ul class="list-group w-75 m-auto">
+
+  <li class="list-group-item" [class]="!state.seatPref ? 'active': 'bg-secondary text-light '"><b>Перелет</b></li>
+  <li class="list-group-item" *ngFor="let segment of state.booking.segments">{{segment.code}} {{segment.startCityName}}
+    -> {{segment.endCityName}} {{segment.airplaneName}} <span class="badge badge-pill" [class]="!state.seatPref ? 'badge-success': 'badge-secondary'" *ngIf="segment.registrationOpen">Регистрация открыта</span><span
+      class="badge badge-pill" [class]="!state.seatPref ? 'badge-danger': 'badge-secondary'" *ngIf="!segment.registrationOpen">Регистрация закрыта</span> <br><span class="text-muted">Вылет:</span> {{segment.departure | date:'medium'}}</li>
+
+  <li class="list-group-item active" [class]="!state.seatPref ? 'active': 'bg-secondary text-light'"><b>Пассажиры</b></li>
+  <li class="list-group-item" *ngFor="let passenger of state.booking.passengers">{{passenger.name}}; {{
+    passenger.birthDate | date:"mediumDate"}} <img *ngIf="!passenger.notInfant " src="../../assets/baby-boy.png"
+                                                   width="20" height="20"></li>
+  <li class="list-group-item" *ngIf="!state.seatPref; else selected">
+    <b>Как вас посадить:</b>
+    <button class="btn btn-primary m-1" *ngFor="let btn of buttons" (click)="choose(btn.constName)">{{btn.text}}</button>
+  </li>
+  <ng-template #selected>
+    <li class="list-group-item">
+      <b>Как вас посадить:</b>
+      <button class="btn btn-secondary m-1 disabled" style="pointer-events: none" disabled>{{getBtn(state.seatPref).text}}</button>
+    </li>
+  </ng-template>
+</ul>
+

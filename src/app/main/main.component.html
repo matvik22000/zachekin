@@ -1,0 +1,23 @@
+<div class="container w-75">
+  <div class="row">
+    <div class="input-group">
+      <ng-container *ngIf="state.state === 'MAIN'; else logined">
+        <input [(ngModel)]="pnr" class="col-md m-1" placeholder="код бронирования"/>
+        <input [(ngModel)]="lastName" class="col-md m-1" placeholder="фамилия"/>
+        <button class="btn btn-primary col-sm-2 m-1" (click)="search()">найти</button>
+      </ng-container>
+
+      <ng-template #logined>
+        <input [(ngModel)]="pnr" class="col-md m-1 dis" placeholder="код бронирования" readonly disabled/>
+        <input [(ngModel)]="lastName" class="col-md m-1 dis" placeholder="фамилия" readonly disabled/>
+        <button class="btn btn-secondary col-sm-2 m-1 btn-dis" disabled>найти</button>
+      </ng-template>
+    </div>
+  </div>
+  <ng-container *ngIf="showWrongDataAlert">
+    <div class="row">
+      <ngb-alert [type]="'danger'" (close)="closeWrongDataAlert()" class="col m-1">Заполните все поля!</ngb-alert>
+    </div>
+  </ng-container>
+</div>
+

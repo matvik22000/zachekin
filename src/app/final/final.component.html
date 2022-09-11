@@ -1,0 +1,25 @@
+<div class="alert alert-success p-3" role="alert" style="text-align: center; margin-top: 1rem; margin-bottom: 1rem">Регистрация открыта!
+  Прямо сейчас зарегистрируем вас и пришлем посадочные талоны.
+</div>
+<ng-template #closed>
+  <div class="alert alert-danger p-3" role="alert" style="text-align: center; margin-top: 1rem; margin-bottom: 1rem">
+    Регистрация еще не открыта! как только она откроется, мы
+    зарегистрируем
+    вас и пришлем талоны вам на email.
+  </div>
+</ng-template>
+
+<ul class="list-group w-75 m-auto">
+  <li class="list-group-item active"><b>Куда прислать посадочные талоны?</b></li>
+  <li class="list-group-item" id="final">
+    <div class="input-group">
+      <div class="input-group-prepend" ngbDropdown *ngIf="emails.length != 0">
+        <button ngbDropdownToggle class="btn btn-primary form-control" id="dropdown">выберете email</button>
+        <div ngbDropdownMenu [aria-label]="'dropdown'">
+          <button ngbDropdownItem *ngFor="let email of emails" (click)="choseEmail(email)">{{ email }}</button>
+        </div>
+      </div>
+      <input (keydown)="keyPressed($event)" class="form-control" placeholder="введите email" id="email_input">
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,41 @@
+<!--<div class="container w-50 m-auto">-->
+<!--<div class="row">-->
+<!--<div *ngFor="let passenger of state.booking.passengers" class="card m-1" style="width: 15rem">-->
+<!--<h5 class="card-title m-1">{{ passenger.name }}</h5>-->
+<!--<div class="card-body">{{ passenger.birthDate | date:"mediumDate"}} <img *ngIf="!passenger.notInfant "-->
+<!--src="../../assets/baby-boy.png"-->
+<!--width="20" height="20"></div>-->
+<!--<button class="btn btn-primary m-1">выбрать питание</button>-->
+<!--<button class="btn btn-primary m-1 ">программа лояльности</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<ul class="list-group w-75 m-auto" *ngFor="let segment of state.booking.segments">
+  <li class="list-group-item active" [class]="state.state === 'food' ? 'active': 'bg-secondary text-light'"><b>Выберите
+    питание в рейсе {{segment.code}} {{segment.startCityName}} -> {{segment.endCityName}}</b></li>
+  <li class="list-group-item" *ngFor="let passenger of state.booking.passengers; index as i">{{passenger.name}}<img
+    *ngIf="!passenger.notInfant " src="../../assets/baby-boy.png"
+    width="20" height="20">
+    <div class="input-group mb-3">
+      <select class="custom-select foodSelect" [class]="chosenFood[segment.segmentNumber-1][i].disabled? 'dis': ''"
+              [disabled]="chosenFood[segment.segmentNumber-1][i].disabled" (change)="choose(i, segment.segmentNumber)">
+        <option *ngIf="!chosenFood[segment.segmentNumber-1][i].code" selected>выбрать</option>
+        <option *ngFor="let meal of food" [selected]="checkFood(segment.segmentNumber-1, i, meal)" [value]="meal.code">
+          {{meal.title}}
+        </option>
+      </select>
+    </div>
+    <!--<div ngbDropdown class="input-group-prepend">-->
+    <!--<button ngbDropdownToggle class="btn btn-outline-primary" [id]="i">выбрать</button>-->
+    <!--<div ngbDropdownMenu [aria-labelledby]="i">-->
+    <!--<button *ngFor="let meal of food" class="btn btn-primary m-2">{{meal.title}}</button>-->
+    <!--</div>-->
+    <!--</div>-->
+  </li>
+  <li class="list-group-item">
+    <button class="btn" [class]="state.state === 'food' ? 'btn-primary': 'btn-secondary btn-dis'"
+            [disabled]="state.state !== 'food'" (click)="next()">продолжить
+    </button>
+  </li>
+</ul>
+

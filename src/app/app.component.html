@@ -1,0 +1,21 @@
+<div style=";position:absolute;z-index: 10;right: 0.5rem;top: 0.5rem;">
+  <ngb-toast
+    *ngFor="let toast of toaster.toasts"
+    [class]="toast.classname"
+    [autohide]="true"
+    [delay]="toast.delay || 5000"
+    (hide)="toaster.remove(toast)">
+    <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+      <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+    </ng-template>
+
+    <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+  </ngb-toast>
+</div>
+<app-main *ngIf="state.state === 'MAIN' || state.state === 'SELECT_SEATS_PERF' || state.state === 'SELECT_LOYALTY_PASSENGER' || state.state === 'food' || state.state === 'FINISH'"
+          [(state)]="state" [(pnr)]="pnr"
+          [(lastName)]="lastName"></app-main>
+<app-info *ngIf="state.state === 'SELECT_SEATS_PERF' || state.state === 'SELECT_LOYALTY_PASSENGER' || state.state === 'food' || state.state === 'FINISH'" [(state)]="state"></app-info>
+<app-options *ngIf="state.state === 'SELECT_LOYALTY_PASSENGER' || state.state === 'food' || state.state === 'FINISH'" [(state)]="state"></app-options>
+<app-food *ngIf="state.state === 'food' || state.state === 'FINISH'" [(state)]="state"></app-food>
+<app-final *ngIf="state.state === 'FINISH'" [(state)]="state"></app-final>

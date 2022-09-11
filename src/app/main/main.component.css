@@ -1,0 +1,9 @@
+.dis {
+  background-color: #ebebeb;
+  pointer-events: none;
+  border: none;
+  opacity: 0.7;
+}
+.btn-dis {
+  pointer-events: none;
+}
